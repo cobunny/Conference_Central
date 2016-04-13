@@ -3,12 +3,13 @@ import endpoints
 from protorpc import messages
 from google.appengine.ext import ndb
 
-
+# - - - Profiles - - - - - - - - - - - - - - - - - - - - - - -
 class Profile(ndb.Model):
     """Profile -- User profile object"""
     displayName = ndb.StringProperty()
     mainEmail = ndb.StringProperty()
     teeShirtSize = ndb.StringProperty(default='NOT_SPECIFIED')
+    conferenceKeysToAttend = ndb.StringProperty(repeated=True)
 
 
 class ProfileMiniForm(messages.Message):
@@ -43,6 +44,8 @@ class TeeShirtSize(messages.Enum):
     XXXL_W = 15
 
 
+
+# - - - Conferences - - - - - - - - - - - - - -
 class Conference(ndb.Model):
     """Conference -- Conference object"""
     name            = ndb.StringProperty(required=True)
@@ -85,3 +88,13 @@ class ConferenceQueryForms(messages.Message):
     """ConferenceQueryForms -- multiple ConferenceQueryForm inbound form message"""
     filters = messages.MessageField(ConferenceQueryForm, 1, repeated=True)
 
+
+# - - - Misc - - - - - - - - - - - - - - - - - - - - - - - -
+# needed for conference registration
+class BooleanMessage(messages.Message):
+    """BooleanMessage-- outbound Boolean value message"""
+    data = messages.BooleanField(1)
+
+class ConflictException(endpoints.ServiceException):
+    """ConflictException -- exception mapped to HTTP 409 response"""
+    http_status = httplib.CONFLICT
