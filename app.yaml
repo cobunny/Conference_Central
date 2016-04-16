@@ -34,6 +34,13 @@ handlers:       # static then dynamic
   script: conference.api
   secure: always
 
+# announcement
+- url: /crons/set_announcement
+  script: main.app
+  login: admin
+
+
+
 libraries:
 
 - name: endpoints

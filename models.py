@@ -89,6 +89,13 @@ class ConferenceQueryForms(messages.Message):
     filters = messages.MessageField(ConferenceQueryForm, 1, repeated=True)
 
 
+
+# - - - Memcache for announcement- - - - - - - - - - - - - - - - - - - - - - - -
+class StringMessage(messages.Message):
+    """StringMessage-- outbound (single) string message"""
+    data = messages.StringField(1, required=True)
+
+
 # - - - Misc - - - - - - - - - - - - - - - - - - - - - - - -
 # needed for conference registration
 class BooleanMessage(messages.Message):
